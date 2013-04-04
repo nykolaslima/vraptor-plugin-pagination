@@ -1,0 +1,72 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>br.com.caelum.vraptor</groupId>
+	<artifactId>vraptor-plugin-pagination</artifactId>
+	<packaging>jar</packaging>
+	<name>vraptor-plugin-pagination</name>
+	<version>0.1</version>
+	<description>A plugin to make pagination easier with VRaptor</description>
+	<url>https://github.com/nykolaslima/vraptor-plugin-pagination</url>
+	
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>	    
+	</licenses>
+	
+	<scm>
+		<url>https://github.com/nykolaslima/vraptor-plugin-pagination</url>
+		<connection>scm:git:git://github.com/nykolaslima/vraptor-plugin-pagination</connection>
+		<developerConnection>scm:git:git@github.com/nykolaslima/vraptor-plugin-pagination.git</developerConnection>
+	</scm>
+	
+	<developers>
+		<developer>
+			<id>nykolaslima</id>
+			<name>Nykolas Laurentino de Lima</name>
+			<email>nykolas.lima@gmail.com</email>
+			<roles>
+				<role>developer</role>
+			</roles>
+			<timezone>-3</timezone>
+		</developer>
+	</developers>
+
+	<dependencies>
+		<dependency>
+			<groupId>br.com.caelum</groupId>
+			<artifactId>vraptor</artifactId>
+			<version>3.5.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>displaytag</groupId>
+			<artifactId>displaytag</artifactId>
+			<version>1.2</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compile.encoding>UTF-8</maven.compile.encoding>
+	</properties>
+
+</project>
+
