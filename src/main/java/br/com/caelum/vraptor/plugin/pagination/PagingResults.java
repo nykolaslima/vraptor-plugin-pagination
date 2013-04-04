@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface PagingResults<T> {
 
-	int	DEFAULT_OBJECTS_PER_PAGE	= 10;
+	int	DEFAULT_OBJECTS_PER_PAGE_QUANTITY = 10;
 	
 	public interface RequestParameters {
 		String	SORT		= "sort";
