@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface PagingResults<T> {
 
-	int	DEFAULT_OBJECTS_PER_PAGE_QUANTITY = 10;
+	public static final String paginationPropertiesFile = "vraptor-pagination";
 	
 	public interface RequestParameters {
 		String	SORT		= "sort";
