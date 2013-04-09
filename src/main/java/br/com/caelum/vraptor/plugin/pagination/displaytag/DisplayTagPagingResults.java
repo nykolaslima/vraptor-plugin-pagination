@@ -5,7 +5,6 @@ import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.log4j.Logger;
 import org.displaytag.pagination.PaginatedList;
 import org.displaytag.properties.SortOrderEnum;
 
@@ -18,7 +17,6 @@ import br.com.caelum.vraptor.plugin.pagination.SortOrder;
 @RequestScoped
 public class DisplayTagPagingResults<T> implements PagingResults<T>, PaginatedList {
 	
-	private static final Logger logger = Logger.getLogger(DisplayTagPagingResults.class);
 	private int pageNumber;
 	private int	objectsPerPage;
 	private int	totalNumberOfRows;
@@ -54,7 +52,6 @@ public class DisplayTagPagingResults<T> implements PagingResults<T>, PaginatedLi
 		String stringObjectsPerPage = getBundle().getString("objects-per-page");
 		if(stringObjectsPerPage == null) throw new IllegalArgumentException("No key 'objects-per-page' found in displaytag.properties.");
 
-		logger.info("Using objects per page: " + stringObjectsPerPage);
 		setObjectsPerPage(Integer.parseInt(stringObjectsPerPage));
 	}
 	
