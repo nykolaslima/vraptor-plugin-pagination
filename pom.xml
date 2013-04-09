@@ -45,23 +45,29 @@
 		<dependency>
 			<groupId>displaytag</groupId>
 			<artifactId>displaytag</artifactId>
-			<version>1.2</version>
+			<version>1.1.1</version>
 		</dependency>
+		<dependency>
+	  		<groupId>org.hibernate</groupId>
+	  		<artifactId>hibernate-entitymanager</artifactId>
+	  		<version>4.1.7.Final</version>
+  		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
 			<version>2.5</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.11</version>
+			<version>4.9</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-all</artifactId>
-			<version>1.9.5</version>
+			<version>1.8.4</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
