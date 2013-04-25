@@ -2,16 +2,18 @@ package br.com.caelum.vraptor.plugin.pagination;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
+
 public interface PagingResults<T> {
 
 	public static final String paginationPropertiesFile = "vraptor-pagination";
 	
 	public interface RequestParameters {
-		String	SORT		= "sort";
-		String	PAGE		= "page";
-		String	ASC			= "asc";
-		String	DESC		= "desc";
-		String	DIRECTION	= "dir";
+		String	SORT_CRITERION		= "sort";
+		String	PAGE				= "page";
+		String	ASC					= "asc";
+		String	DESC				= "desc";
+		String	SORT_DIRECTION		= "dir";
 	}
 
 	int getPageNumber();
@@ -24,9 +26,7 @@ public interface PagingResults<T> {
 	
 	int getTotalPages();
 	
-	List<T> getList();
-	
-	void setList(List<T> resultList);
+	List<T> getResults();
 	
 	int getObjectsPerPage();
 	
@@ -42,4 +42,5 @@ public interface PagingResults<T> {
 	
 	int getFirstRecordIndex();
 	
+	void fetchResults(Criteria criteria);
 }

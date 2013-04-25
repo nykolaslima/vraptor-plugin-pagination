@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.displaytag.pagination.PaginatedList;
 import org.displaytag.properties.SortOrderEnum;
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Order;
 
 import br.com.caelum.vraptor.ioc.Component;
 import br.com.caelum.vraptor.ioc.RequestScoped;
@@ -20,8 +22,8 @@ public class DisplayTagPagingResults<T> implements PagingResults<T>, PaginatedLi
 	private int pageNumber;
 	private int	objectsPerPage;
 	private int	totalNumberOfRows;
-	private List<T> list;
-	private SortOrderEnum sortDirection	= SortOrderEnum.ASCENDING;
+	private List<T> results;
+	private SortOrderEnum sortDirection;
 	private String sortCriterion;
 	
 	public DisplayTagPagingResults(HttpServletRequest request) {
@@ -31,13 +33,15 @@ public class DisplayTagPagingResults<T> implements PagingResults<T>, PaginatedLi
 	}
 
 	private void configurePagingResultTo(HttpServletRequest request) {
-		sortCriterion = request.getParameter(PagingResults.RequestParameters.SORT);
-		String requestSortDirection = request.getParameter(PagingResults.RequestParameters.DIRECTION);
+		sortCriterion = request.getParameter(PagingResults.RequestParameters.SORT_CRITERION);
+		String requestSortDirection = request.getParameter(PagingResults.RequestParameters.SORT_DIRECTION);
 		
-		if(PagingResults.RequestParameters.DESC.equals(requestSortDirection)) {
-			sortDirection = SortOrderEnum.DESCENDING;
-		} else {
-			sortDirection = SortOrderEnum.ASCENDING;
+		if(requestSortDirection != null) {
+			if(PagingResults.RequestParameters.DESC.equals(requestSortDirection)) {
+				sortDirection = SortOrderEnum.DESCENDING;
+			} else {
+				sortDirection = SortOrderEnum.ASCENDING;
+			}
 		}
 		
 		String page = request.getParameter(PagingResults.RequestParameters.PAGE);
@@ -85,13 +89,13 @@ public class DisplayTagPagingResults<T> implements PagingResults<T>, PaginatedLi
 	}
 	
 	@Override
-	public List<T> getList() {
-		return list;
+	public List<T> getResults() {
+		return results;
 	}
 	
 	@Override
-	public void setList(List<T> resultList) {
-		list = resultList;
+	public List<T> getList() {
+		return results;
 	}
 	
 	@Override
@@ -153,5 +157,16 @@ public class DisplayTagPagingResults<T> implements PagingResults<T>, PaginatedLi
 	@Override
 	public String getSearchId() {
 		return null;
+	}
+
+	@Override
+	public void fetchResults(Criteria criteria) {
+		if(getSortDirection() != null) {
+			if(getSortDirection().equals(SortOrderEnum.ASCENDING)) {
+				criteria.addOrder(Order.asc(getSortCriterion()));
+			} else {
+				criteria.addOrder(Order.desc(getSortCriterion()));
+			}
+		}
 	}
 }
