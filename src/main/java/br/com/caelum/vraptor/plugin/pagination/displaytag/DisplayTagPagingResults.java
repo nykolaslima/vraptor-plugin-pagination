@@ -159,6 +159,7 @@ public class DisplayTagPagingResults<T> implements PagingResults<T>, PaginatedLi
 		return null;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void fetchResults(Criteria criteria) {
 		if(getSortDirection() != null) {
@@ -168,5 +169,8 @@ public class DisplayTagPagingResults<T> implements PagingResults<T>, PaginatedLi
 				criteria.addOrder(Order.desc(getSortCriterion()));
 			}
 		}
+		
+		criteria.setFirstResult(getFirstRecordIndex()).setMaxResults(getObjectsPerPage());
+		results = criteria.list();
 	}
 }
