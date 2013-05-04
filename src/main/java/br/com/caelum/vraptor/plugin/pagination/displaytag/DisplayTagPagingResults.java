@@ -9,6 +9,7 @@ import org.displaytag.pagination.PaginatedList;
 import org.displaytag.properties.SortOrderEnum;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 
 import br.com.caelum.vraptor.ioc.Component;
 import br.com.caelum.vraptor.ioc.RequestScoped;
@@ -170,7 +171,20 @@ public class DisplayTagPagingResults<T> implements PagingResults<T>, PaginatedLi
 			}
 		}
 		
+		totalNumberOfRows = count(criteria);
+		
 		criteria.setFirstResult(getFirstRecordIndex()).setMaxResults(getObjectsPerPage());
 		results = criteria.list();
+	}
+	
+	private int count(Criteria criteria) {
+		try {
+			criteria.setProjection(Projections.count(Projections.id().toString()));
+			
+			return ((Number) criteria.uniqueResult()).intValue();
+		}
+		finally {
+			criteria.setProjection(null);
+		}
 	}
 }
