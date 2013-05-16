@@ -27,7 +27,7 @@ public class DisplayTagPagingResultsTest {
 	@Test @Ignore("since Order.class don't implement equals and hashcode we can't test with verify")
 	public void shouldSortAsc() {
 		HttpServletRequest request = mock(HttpServletRequest.class);
-		Criteria criteria = mock(Criteria.class);
+		Criteria criteria = buildCriteriaMock();
 		
 		when(request.getParameter(SORT_DIRECTION)).thenReturn(ASC);
 		when(request.getParameter(SORT_CRITERION)).thenReturn("name");
@@ -40,7 +40,7 @@ public class DisplayTagPagingResultsTest {
 	@Test @Ignore("since Order.class don't implement equals and hashcode we can't test with verify")
 	public void shouldSortDesc() {
 		HttpServletRequest request = mock(HttpServletRequest.class);
-		Criteria criteria = mock(Criteria.class);
+		Criteria criteria = buildCriteriaMock();
 		
 		when(request.getParameter(SORT_DIRECTION)).thenReturn(DESC);
 		when(request.getParameter(SORT_CRITERION)).thenReturn("name");
@@ -53,7 +53,7 @@ public class DisplayTagPagingResultsTest {
 	@Test
 	public void fetchResultsShouldWorkWithoutSort() {
 		HttpServletRequest request = mock(HttpServletRequest.class);
-		Criteria criteria = mock(Criteria.class);
+		Criteria criteria = buildCriteriaMock();
 		
 		when(request.getParameter(SORT_DIRECTION)).thenReturn(null);
 		when(criteria.setFirstResult(anyInt())).thenReturn(criteria);
@@ -67,7 +67,7 @@ public class DisplayTagPagingResultsTest {
 	@Test
 	public void shouldFetchFirstPageOfResults() {
 		HttpServletRequest request = mock(HttpServletRequest.class);
-		Criteria criteria = mock(Criteria.class);
+		Criteria criteria = buildCriteriaMock();
 		
 		when(request.getParameter(PAGE)).thenReturn("1");
 		when(criteria.setFirstResult(anyInt())).thenReturn(criteria);
@@ -82,7 +82,7 @@ public class DisplayTagPagingResultsTest {
 	@Test
 	public void shouldFetchSecondPageOfResults() {
 		HttpServletRequest request = mock(HttpServletRequest.class);
-		Criteria criteria = mock(Criteria.class);
+		Criteria criteria = buildCriteriaMock();
 		
 		when(request.getParameter(PAGE)).thenReturn("2");
 		when(criteria.setFirstResult(anyInt())).thenReturn(criteria);
@@ -97,7 +97,7 @@ public class DisplayTagPagingResultsTest {
 	@Test
 	public void shouldFetchFirstPageOfResultsIfNoPageParameterIsNotDefined() {
 		HttpServletRequest request = mock(HttpServletRequest.class);
-		Criteria criteria = mock(Criteria.class);
+		Criteria criteria = buildCriteriaMock();
 		
 		when(request.getParameter(PAGE)).thenReturn(null);
 		when(criteria.setFirstResult(anyInt())).thenReturn(criteria);
@@ -112,10 +112,7 @@ public class DisplayTagPagingResultsTest {
 	@Test
 	public void shouldSetTotalNumberOfResultRows() {
 		HttpServletRequest request = mock(HttpServletRequest.class);
-		Criteria criteria = mock(Criteria.class);
-		
-		when(criteria.setFirstResult(anyInt())).thenReturn(criteria);
-		when(criteria.uniqueResult()).thenReturn(20);
+		Criteria criteria = buildCriteriaMock();
 		
 		DisplayTagPagingResults<Object> pagingResults = new DisplayTagPagingResults<Object>(request);
 		
@@ -127,15 +124,21 @@ public class DisplayTagPagingResultsTest {
 	@Test
 	public void shouldUseDefaultOrderIfHasNoSortCriterion() {
 		HttpServletRequest request = mock(HttpServletRequest.class);
-		Criteria criteria = mock(Criteria.class);
+		Criteria criteria = buildCriteriaMock();
 		
-		when(criteria.setFirstResult(anyInt())).thenReturn(criteria);
-		when(criteria.uniqueResult()).thenReturn(20);
 		DisplayTagPagingResults<Object> pagingResults = new DisplayTagPagingResults<Object>(request);
 		
 		pagingResults.setDefaultOrder("name", SortOrder.ASCENDING);
 		pagingResults.fetchResults(criteria);
 		
 		verify(criteria).addOrder(any(Order.class));
+	}
+
+	private Criteria buildCriteriaMock() {
+		Criteria criteria = mock(Criteria.class);
+		
+		when(criteria.setFirstResult(anyInt())).thenReturn(criteria);
+		when(criteria.uniqueResult()).thenReturn(20);
+		return criteria;
 	}
 }
