@@ -26,6 +26,8 @@ public class DisplayTagPagingResults<T> implements PagingResults<T>, PaginatedLi
 	private List<T> results;
 	private SortOrderEnum sortDirection;
 	private String sortCriterion;
+	private String defaultSortCriterion;
+	private SortOrder defaultSortOrder;
 	
 	public DisplayTagPagingResults(HttpServletRequest request) {
 		configureObjectsPerPage();
@@ -169,12 +171,24 @@ public class DisplayTagPagingResults<T> implements PagingResults<T>, PaginatedLi
 			} else {
 				criteria.addOrder(Order.desc(getSortCriterion()));
 			}
+		} else if(defaultSortCriterion != null) {
+			if(defaultSortOrder == SortOrder.DESCENDING) {
+				criteria.addOrder(Order.desc(defaultSortCriterion));
+			} else {
+				criteria.addOrder(Order.asc(defaultSortCriterion));
+			}
 		}
 		
 		totalNumberOfRows = count(criteria);
 		
 		criteria.setFirstResult(getFirstRecordIndex()).setMaxResults(getObjectsPerPage());
 		results = criteria.list();
+	}
+	
+	@Override
+	public void setDefaultOrder(String sortCriterion, SortOrder sortOrder) {
+		defaultSortCriterion = sortCriterion;
+		defaultSortOrder = sortOrder;
 	}
 	
 	private int count(Criteria criteria) {

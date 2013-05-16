@@ -20,6 +20,8 @@ import org.hibernate.criterion.Order;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import br.com.caelum.vraptor.plugin.pagination.SortOrder;
+
 public class DisplayTagPagingResultsTest {
 	
 	@Test @Ignore("since Order.class don't implement equals and hashcode we can't test with verify")
@@ -120,5 +122,20 @@ public class DisplayTagPagingResultsTest {
 		pagingResults.fetchResults(criteria);
 		
 		assertEquals(20, pagingResults.getTotalNumberOfRows());
+	}
+	
+	@Test
+	public void shouldUseDefaultOrderIfHasNoSortCriterion() {
+		HttpServletRequest request = mock(HttpServletRequest.class);
+		Criteria criteria = mock(Criteria.class);
+		
+		when(criteria.setFirstResult(anyInt())).thenReturn(criteria);
+		when(criteria.uniqueResult()).thenReturn(20);
+		DisplayTagPagingResults<Object> pagingResults = new DisplayTagPagingResults<Object>(request);
+		
+		pagingResults.setDefaultOrder("name", SortOrder.ASCENDING);
+		pagingResults.fetchResults(criteria);
+		
+		verify(criteria).addOrder(any(Order.class));
 	}
 }

@@ -43,4 +43,6 @@ public interface PagingResults<T> {
 	int getFirstRecordIndex();
 	
 	void fetchResults(Criteria criteria);
+	
+	void setDefaultOrder(String sortCriterion, SortOrder order);
 }
